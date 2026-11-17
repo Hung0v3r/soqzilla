@@ -28,6 +28,8 @@ const PAGE = fs.readFileSync(new URL("./public/index.html", import.meta.url));
 const STYLE = fs.readFileSync(new URL("./public/style.css", import.meta.url));
 const TEMPLATE = fs.readFileSync(new URL("./public/page.html", import.meta.url), "utf8");
 const API_BODY = fs.readFileSync(new URL("./public/api-body.html", import.meta.url), "utf8");
+const PRIVACY_BODY = fs.readFileSync(new URL("./public/privacy-body.html", import.meta.url), "utf8");
+const FONTS = Object.fromEntries(["archivo", "jetbrains-mono"].map((n) => [`/fonts/${n}.woff2`, fs.readFileSync(new URL(`./public/fonts/${n}.woff2`, import.meta.url))]));
 const SPEC_HTML = marked.parse(SPEC.toString("utf8"));
 const hexOf = (w) => [...Buffer.from(w.toUpperCase())].map((b) => b.toString(16).toUpperCase().padStart(2, "0")).join(" ");
 /** The site's text pages share one template: header, hex strip, footer. */
@@ -196,9 +198,11 @@ function limit(ip, name, perMinute) {
   b.n = Math.min(perMinute, b.n + ((now - b.t) / 60_000) * perMinute); b.t = now;
   if (b.n < 1) throw httpError(429, "slow down");
   b.n -= 1; buckets.set(k, b);
-  // forget idle callers (never everyone at once, which would reset busy ones too)
+  // flood guard; the timer below forgets idle callers anyway
   if (buckets.size > 50_000) for (const [key, v] of buckets) if (now - v.t > 120_000) buckets.delete(key);
 }
+// IP addresses live only here, in memory: forget each one two minutes after its last request.
+setInterval(() => { const now = Date.now(); for (const [key, v] of buckets) if (now - v.t > 120_000) buckets.delete(key); }, 60_000).unref();
 const limitGlobal = (name, perMinute) => limit("*", name, perMinute);
 
 const str = (v) => (typeof v === "bigint" ? String(v) : v);
@@ -299,6 +303,8 @@ const server = http.createServer(async (req, res) => {
       if (p === "/SPEC.md") { res.writeHead(200, { "content-type": "text/markdown; charset=utf-8", "access-control-allow-origin": "*" }); return res.end(SPEC); }
       if (p === "/style.css") { res.writeHead(200, { "content-type": "text/css; charset=utf-8", "cache-control": "max-age=300" }); return res.end(STYLE); }
       if (p === "/rules") return html(res, 200, rulesPage());
+      if (p === "/privacy") return html(res, 200, fillPage({ title: "Privacy", description: "What soqzilla.com and the Soqzilla app collect, and what they don't.", hex: hexOf("PRIVACY"), strip: "no cookies · no tracking", body: PRIVACY_BODY }));
+      if (FONTS[p]) { res.writeHead(200, { "content-type": "font/woff2", "cache-control": "public, max-age=31536000, immutable" }); return res.end(FONTS[p]); }
       if (p === "/api") return html(res, 200, fillPage({ title: "API", description: "Soqzilla's open JSON API: status, mining work, balances, holders and the relay.", hex: hexOf("API"), strip: "JSON · no key needed", body: API_BODY }));
       if (p === "/" || p === "/index.html") { res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "max-age=60" }); return res.end(PAGE); }
     }

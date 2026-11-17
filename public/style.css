@@ -1,3 +1,6 @@
+/* Fonts are served from soqzilla.com itself (Latin subsets of the OFL fonts in licenses/): no third-party requests. */
+@font-face { font-family: "Archivo"; src: url("/fonts/archivo.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("/fonts/jetbrains-mono.woff2") format("woff2"); font-weight: 100 800; font-display: swap; }
 /* Raw: warm paper, near-black ink, one signal orange, heavy rules, film grain. Light by default, dark with the system. */
 :root {
   --paper: #e9e6df; --panel: #dfdbd2; --ink: #0f0f0e; --mute: #5c5850; --signal: #ff4a1c; --on-signal: #0f0f0e;

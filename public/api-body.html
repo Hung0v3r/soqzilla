@@ -1,0 +1,39 @@
+<h1>API</h1>
+<p>Everything soqzilla.com shows comes from these addresses. They answer in JSON, need no key, and anyone may use them. The same API runs on any copy of the open indexer, so you can check one against another.</p>
+
+<div class="note"><strong>For people, not code</strong>Looking for a balance? Use the <a href="/#lookup">address lookup on the home page</a>. These addresses are for apps and scripts.</div>
+
+<h2>Read</h2>
+
+<div class="endpoint"><p><span class="verb">GET</span><span class="path"><a href="/api/status">/api/status</a></span></p>
+<p>The whole picture: SOQ block height, whether SQZ is deployed and launched, SQZ mined so far, finds, holders, the reward per find, the current difficulty target, the next retarget block, the rules fingerprint and the relay's fee jar.</p></div>
+
+<div class="endpoint"><p><span class="verb">GET</span><span class="path"><a href="/api/work">/api/work</a></span></p>
+<p>The current mining job: the reference block and its hash, the target a hash must beat, the reward, and the last block a solution for it is still good for.</p></div>
+
+<div class="endpoint"><p><span class="verb">GET</span><span class="path">/api/address/&lt;sq1p…&gt;</span></p>
+<p>One address: its SQZ balance (including the last few blocks), the settled balance (12+ blocks deep) and its recent finds and transfers.</p></div>
+
+<div class="endpoint"><p><span class="verb">GET</span><span class="path"><a href="/api/top">/api/top</a></span></p>
+<p>The biggest holders, with their share of everything mined. <code>?limit=1…200</code>, default 50.</p></div>
+
+<div class="endpoint"><p><span class="verb">GET</span><span class="path"><a href="/api/events">/api/events</a></span></p>
+<p>The latest finds and transfers across everyone, newest first.</p></div>
+
+<div class="endpoint"><p><span class="verb">GET</span><span class="path">/api/utxos/&lt;sq1p…&gt;</span></p>
+<p>The SOQ coins an address holds, which a wallet needs to pay its own network fee.</p></div>
+
+<h2>Write</h2>
+<p>These take JSON (<code>content-type: application/json</code>) and are rate-limited per caller.</p>
+
+<div class="endpoint"><p><span class="verb post">POST</span><span class="path">/api/mint</span></p>
+<p>Hand a found solution to the relay: <code>{"refHeight", "nonce", "address"}</code>. The relay checks the work and pays the SOQ fee. The reward goes to the address inside the work, so the relay cannot redirect it.</p></div>
+
+<div class="endpoint"><p><span class="verb post">POST</span><span class="path">/api/gas</span></p>
+<p>A one-off 0.05 SOQ for sending fees, for an address that has mined at least once. Once per address, within a daily budget.</p></div>
+
+<div class="endpoint"><p><span class="verb post">POST</span><span class="path">/api/broadcast</span></p>
+<p>Send a signed Soqzilla transaction to the Soqucoin network: <code>{"rawTxHex"}</code>. Only transactions that carry a Soqzilla message are accepted.</p></div>
+
+<h2>Check it yourself</h2>
+<p>The rules are fixed by the SHA-256 of <a href="/SPEC.md">SPEC.md</a>, which the deploy transaction wrote to the chain. Run the same indexer against your own Soqucoin node and every number here must match.</p>

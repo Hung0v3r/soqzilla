@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soqzilla</title>
+<meta name="description" content="Soqzilla (SQZ): a phone-mined token recorded on Soqucoin. Supply, recent finds, top holders and address lookup.">
+<meta name="theme-color" content="#e9e6df" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f0f0e" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%2722 22 64 64%27%3E%3Crect x=%2722%27 y=%2722%27 width=%2764%27 height=%2764%27 fill=%27%230f0f0e%27/%3E%3Cpath fill=%27%23e9e6df%27 d=%27M29 38h30v7L39.5 63H59v7H29v-7l19.5-18H29z%27/%3E%3Cpath fill=%27%23ff4a1c%27 d=%27M63 63h16v7H63z%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="/"><i></i>SOQZILLA</a>
+    <nav><a href="#mine">Mine</a><a href="/rules">Rules</a><a class="opt" href="#heat">Heat</a><a href="https://t.me/Hung0v3r">Telegram</a></nav>
+  </header>
+  <div class="strip"><span>53 4F 51 5A 49 4C 4C 41</span><span>SQZ / on Soqucoin</span></div>
+
+  <div class="hero">
+    <h1>Soq<br>zilla<span class="cursor"></span></h1>
+    <p class="lead">A just-for-fun token, mined on <span class="hl">phones</span> and recorded on <span class="hl">Soqucoin</span>. 21 billion SQZ. No premine. Nothing sold.</p>
+    <div id="testBadge" class="badge" hidden>Test network (tag SQX): worthless test coins</div>
+    <div class="cta"><a class="btn solid" href="/soqzilla.apk" download>Download the APK ↓</a><a class="btn" href="/rules">Read the rules</a></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="reward">–</b><span>SQZ per find</span></div>
+    <div class="stat"><b id="mints">–</b><span>Finds so far</span></div>
+    <div class="stat"><b id="holders">–</b><span>Holders</span></div>
+    <div class="stat"><b id="miners">–</b><span>Phones mining now</span></div>
+    <div class="stat"><b id="height">–</b><span>SOQ block</span></div>
+  </div>
+
+  <section>
+    <div class="label"><em>[01]</em>Network</div>
+    <div id="phase" style="font-weight:600">Loading…</div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="muted mono" id="barText"></div>
+  </section>
+
+  <div class="two">
+    <section id="mine">
+      <div class="label"><em>[02]</em>Mine it</div>
+      <h2>Your phone is the rig.</h2>
+      <p>Android only for now. The app mines with a 64 MB proof of work built for phones, and the relay pays the SOQ network fee, so you need no SOQ to start. Read <a href="#heat">heat &amp; your battery</a> before you start.</p>
+      <p><a class="btn solid" href="/soqzilla.apk" download>Download soqzilla.apk ↓</a></p>
+      <p class="muted" style="font-size:0.9rem">Install from outside Google Play: Play does not allow mining apps. Check the file before you install: sha256 <span class="mono">6b4d5e0988a6a0fe513fc52f41cdb0e795be4d47bcbe71627b434368e9c12345</span>, signed with certificate <span class="mono">5a26c7fa…b992ec</span>.</p>
+    </section>
+    <section>
+      <div class="label"><em>[03]</em>Fee jar</div>
+      <p style="margin-top:0">Every find is a SOQ transaction, and the relay pays its network fee from this address. Anyone can top it up to keep mining free.</p>
+      <div class="mini">
+        <div class="stat"><b id="jarSoq">–</b><span>In the jar</span></div>
+        <div class="stat"><b id="jarDays">–</b><span>At full pace</span></div>
+      </div>
+      <div class="jar"><code id="jarAddr">–</code><button id="jarCopy" type="button">Copy</button></div>
+    </section>
+  </div>
+
+  <section id="heat">
+    <div class="label"><em>[04]</em>Heat &amp; your battery</div>
+    <h2>Mining makes phones hot.</h2>
+    <div class="two" style="gap:0 2.5rem">
+      <div>
+        <p style="margin-top:0">Mining keeps your phone's processor busy the whole time it runs. The phone gets warm, the battery drains faster, and steady heat wears a battery out sooner, the same as long gaming sessions do.</p>
+        <p>The app watches the battery temperature and Android's own heat warnings. It warns at 40°C, pauses at 42°C until the battery is back under 38°C, and stops completely at 45°C or when Android reports critical heat. Off the charger it also pauses below 25% battery. It asks you to accept this notice before the first run.</p>
+      </div>
+      <div>
+        <p style="margin-top:0"><strong>Those limits lower the risk; they don't remove it.</strong> Mine somewhere cool and ventilated, take thick cases off, and never mine under a pillow, in bed, in direct sun or in a hot car. Stop if the phone feels hot to hold, swells, or behaves oddly.</p>
+        <p><span class="hl">You mine at your own risk.</span> Soqzilla is free, experimental, open-source software provided as is, without warranty of any kind. Its makers accept no responsibility for damage to your phone, its battery, your data or anything else that results from using it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label"><em>[05]</em>Look up an address</div>
+    <form id="lookup"><input id="addr" placeholder="sq1p…" autocomplete="off" spellcheck="false"><button class="solid">Look up</button></form>
+    <div id="addrOut" style="margin-top:1rem"></div>
+  </section>
+
+  <div class="two">
+    <section>
+      <div class="label"><em>[06]</em>Recent activity</div>
+      <table><thead><tr><th>Block</th><th>What</th><th class="num">SQZ</th></tr></thead><tbody id="events"><tr><td colspan="3" class="muted">Loading…</td></tr></tbody></table>
+    </section>
+    <section>
+      <div class="label"><em>[07]</em>Top holders</div>
+      <table><thead><tr><th>#</th><th>Address</th><th class="num">SQZ</th></tr></thead><tbody id="top"><tr><td colspan="3" class="muted">Loading…</td></tr></tbody></table>
+    </section>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="big">Mine it raw.</div>
+    <p>Contact: <a href="https://t.me/Hung0v3r">Telegram @Hung0v3r</a></p>
+    <p>Rules: <a href="/rules">read them</a> or the <a href="/SPEC.md">raw SPEC.md</a> <span class="mono" id="rules"></span> · <a href="/api">API</a> · MIT licence</p>
+    <p>Balances come from this indexer reading the Soqucoin chain; anyone can run the same code and check them. Ordinary Soqucoin wallets and explorers show Soqzilla actions only as SOQ transactions with a data field.</p>
+    <p>Mining heats phones and wears batteries; you mine at your own risk (see <a href="#heat">heat &amp; your battery</a>). The software is provided as is, without warranty.</p>
+    <p>Not affiliated with Soqucoin or Soqucoin Labs. Not an investment: SQZ has no backing and no promised value.</p>
+  </div>
+</footer>
+<script>
+const $ = (id) => document.getElementById(id);
+const fmt = (v) => (v == null ? "–" : BigInt(v).toLocaleString("en-IE"));
+const short = (a) => (a && a.length > 22 ? a.slice(0, 12) + "…" + a.slice(-6) : a || "");
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const get = (p) => fetch(p).then((r) => r.json());
+const BECH = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
+
+// program (64 hex) -> sq1p… address (bech32m, witness v1), so events can show addresses
+function toAddress(hex) {
+  const bytes = hex.match(/../g).map((h) => parseInt(h, 16));
+  const words = [1]; let acc = 0, bits = 0;
+  for (const b of bytes) { acc = (acc << 8) | b; bits += 8; while (bits >= 5) { bits -= 5; words.push((acc >> bits) & 31); } }
+  if (bits) words.push((acc << (5 - bits)) & 31);
+  const hrp = "sq", G = [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3];
+  const poly = (v) => { let c = 1; for (const x of v) { const t = c >>> 25; c = ((c & 0x1ffffff) << 5) ^ x; for (let i = 0; i < 5; i++) if ((t >>> i) & 1) c ^= G[i]; } return c >>> 0; };
+  const exp = [...hrp].map((ch) => ch.charCodeAt(0) >> 5).concat([0], [...hrp].map((ch) => ch.charCodeAt(0) & 31));
+  const mod = (poly(exp.concat(words, [0, 0, 0, 0, 0, 0])) ^ 0x2bc830a3) >>> 0;
+  const cs = [0, 1, 2, 3, 4, 5].map((i) => (mod >>> (5 * (5 - i))) & 31);
+  return hrp + "1" + words.concat(cs).map((w) => BECH[w]).join("");
+}
+
+function eventRow(e) {
+  const what = e.type === "mint" ? `Found by <span class="mono">${esc(short(toAddress(e.to)))}</span>` : `<span class="mono">${esc(short(toAddress(e.from)))}</span> → <span class="mono">${esc(short(toAddress(e.to)))}</span>`;
+  return `<tr><td class="mono">${e.height}</td><td>${what}</td><td class="num">${fmt(e.amount)}</td></tr>`;
+}
+
+async function refresh() {
+  try {
+    const s = await get("/api/status");
+    $("testBadge").hidden = s.net !== "test";
+    $("rules").textContent = "sha256 " + s.rulesHash.slice(0, 16) + "…";
+    $("height").textContent = (s.indexedHeight ?? "–").toLocaleString("en-IE");
+    $("reward").textContent = fmt(s.reward);
+    $("mints").textContent = fmt(s.mints);
+    $("holders").textContent = fmt(s.holders);
+    $("miners").textContent = s.minersOnline ?? "–";
+    const pct = Number((BigInt(s.minted) * 1000000n) / BigInt(s.cap)) / 10000;
+    $("bar").style.width = Math.max(pct, s.minted !== "0" ? 0.3 : 0) + "%";
+    $("barText").textContent = `${fmt(s.minted)} of 21,000,000,000 SQZ mined (${pct.toFixed(4)}%)`;
+    if (!s.deployed) $("phase").textContent = "Not launched yet. The launch block will be announced.";
+    else if (!s.launched) { const mins = (s.genesis.launchHeight - s.indexedHeight); $("phase").textContent = `Launches at SOQ block ${s.genesis.launchHeight.toLocaleString("en-IE")}, in about ${mins} minute${mins === 1 ? "" : "s"}.`; }
+    else $("phase").innerHTML = `Live since SOQ block ${s.genesis.launchHeight.toLocaleString("en-IE")}. Deploy transaction <span class="mono">${esc(short(s.genesis.txid))}</span>.`;
+    if (s.relay) {
+      const soq = Number(s.relay.balance) / 1e8;
+      const days = Number(s.relay.balance) / (Number(s.relay.findFee) * 1440);
+      $("jarSoq").textContent = soq.toLocaleString("en-IE", { maximumFractionDigits: 1 }) + " SOQ";
+      $("jarDays").textContent = (days >= 2 ? Math.floor(days) : days.toFixed(1)) + " days";
+      $("jarAddr").textContent = s.relay.address;
+    }
+    const ev = await get("/api/events");
+    $("events").innerHTML = ev.events.length ? ev.events.slice(0, 15).map(eventRow).join("") : `<tr><td colspan="3" class="muted">Nothing yet.</td></tr>`;
+    const t = await get("/api/top?limit=15");
+    $("top").innerHTML = t.top.length ? t.top.map((r) => `<tr><td class="muted">${r.rank}</td><td class="mono">${esc(short(r.address))}</td><td class="num">${fmt(r.balance)}</td></tr>`).join("") : `<tr><td colspan="3" class="muted">Nobody yet.</td></tr>`;
+  } catch (e) {
+    $("phase").textContent = "Can't reach the indexer right now.";
+  }
+}
+
+$("lookup").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const a = $("addr").value.trim();
+  if (!a) return;
+  history.replaceState(null, "", "#" + a);
+  $("addrOut").innerHTML = '<span class="muted">Looking up…</span>';
+  try {
+    const r = await fetch("/api/address/" + encodeURIComponent(a));
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || "not found");
+    const rows = j.history.map(eventRow).join("");
+    $("addrOut").innerHTML = `<div class="mono" style="font-size:13px">${esc(j.address)}</div>
+      <div class="stat" style="margin:12px 0;border:2px solid var(--ink)"><b>${fmt(j.balance)} SQZ</b><span>${j.balance === j.confirmedBalance ? "all settled" : fmt(j.confirmedBalance) + " settled (12+ blocks), the rest is recent"}</span></div>
+      ${rows ? `<table><tbody>${rows}</tbody></table>` : '<div class="muted">No activity yet.</div>'}`;
+  } catch (e) {
+    $("addrOut").innerHTML = `<span style="color:#ff6b6b">${esc(e.message === "not an sq1p address" ? e.message : "That isn't an sq1p address this indexer can read.")}</span>`;
+  }
+});
+
+$("jarCopy").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText($("jarAddr").textContent); $("jarCopy").textContent = "Copied"; setTimeout(() => ($("jarCopy").textContent = "Copy"), 1500); } catch {}
+});
+
+if (location.hash.length > 5) {
+  try { $("addr").value = decodeURIComponent(location.hash.slice(1)); $("lookup").requestSubmit(); } catch {}
+}
+refresh();
+setInterval(refresh, 30000);
+</script>
+</body>
+</html>

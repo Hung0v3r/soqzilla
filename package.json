@@ -1,0 +1,25 @@
+{
+  "name": "soqzilla",
+  "version": "1.0.0",
+  "description": "Soqzilla (SQZ): a phone-mined token on Soqucoin",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test test/rules.test.mjs",
+    "bench": "node bench/argon2-bench.mjs",
+    "start": "node server.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "private": "true",
+  "dependencies": {
+    "@noble/hashes": "^1.8.0",
+    "hash-wasm": "^4.12.0",
+    "marked": "^15.0.7",
+    "soq-lightning-sdk": "^0.1.0-alpha.2"
+  },
+  "engines": {
+    "node": "24.22.1"
+  }
+}

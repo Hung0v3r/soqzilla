@@ -1,0 +1,10 @@
+node_modules/
+/data/
+.wallet
+*.jks
+android/keystore.properties
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+.kotlin/

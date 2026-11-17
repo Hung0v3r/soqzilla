@@ -256,7 +256,7 @@ fun MineScreen(me: Store.Me, modifier: Modifier = Modifier) {
                 h.thermalLabel?.let { Line("Phone heat (Android)", it) }
                 Line("Battery", "${h.level}%" + if (h.plugged) " · charging" else "")
                 Text(
-                    "Mining pauses at ${Heat.PAUSE_C.toInt()}°C until the battery is back under ${Heat.RESUME_C.toInt()}°C, and stops completely at ${Heat.STOP_C.toInt()}°C or if Android reports critical heat.",
+                    "Mining pauses at ${Heat.PAUSE_C.toInt()}°C until the battery is back under ${Heat.RESUME_C.toInt()}°C, and stops completely at ${Heat.STOP_C.toInt()}°C or if Android reports critical heat. These are software safeguards and could fail: don't leave the phone mining unattended or overnight.",
                     color = Mute, fontSize = 12.sp,
                 )
             }
@@ -299,7 +299,10 @@ fun MineScreen(me: Store.Me, modifier: Modifier = Modifier) {
                         "and steady heat wears a battery out sooner.\n\n" +
                         "Soqzilla watches the battery temperature: it pauses at ${Heat.PAUSE_C.toInt()}°C and stops at ${Heat.STOP_C.toInt()}°C. " +
                         "That lowers the risk; it doesn't remove it. Mine somewhere cool, take thick cases off, and never under a pillow, in bed or in the sun.\n\n" +
-                        "Soqzilla is free, experimental software with no warranty. You mine at your own risk."
+                        "Don't leave your phone mining unattended or overnight. The pause and the stop are software and could fail: check on the phone while it mines.\n\n" +
+                        "Best of all, mine on a spare phone you don't rely on, never on one whose battery is swollen or failing.\n\n" +
+                        "Soqzilla is free, experimental software with no warranty. You mine at your own risk.",
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
                 )
             },
             confirmButton = { TextButton({ Store.acceptHeatNotice(ctx); showHeatNotice = false; begin() }) { Text("I UNDERSTAND, START") } },
@@ -760,7 +763,7 @@ fun SettingsScreen(me: Store.Me, onWalletChanged: () -> Unit, modifier: Modifier
 
         Panel("About", 5) {
             Line("Version", BuildConfig.VERSION_NAME)
-            Text("Soqzilla is free, experimental, open-source software provided as is, without warranty. Mining heats phones and wears batteries: you mine at your own risk. Not an investment. Not affiliated with Soqucoin or Soqucoin Labs.", color = Mute, fontSize = 12.sp)
+            Text("Soqzilla is free, experimental, open-source software provided as is, without warranty. Mining heats phones and wears batteries: don't leave a phone mining unattended or overnight, and you mine at your own risk. Not an investment. Not affiliated with Soqucoin or Soqucoin Labs.", color = Mute, fontSize = 12.sp)
             ContactLine()
         }
 

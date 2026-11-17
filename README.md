@@ -9,7 +9,7 @@ A just-for-fun token you mine on your phone, recorded on the [Soqucoin](https://
 
 Soqucoin has no native tokens. Every Soqzilla action is an ordinary SOQ transaction with a short tagged message in its data output, and the open indexer here turns the chain into balances. Anyone can run it and get the same numbers. The rules are in [SPEC.md](SPEC.md); the deploy transaction commits its SHA-256 on chain, and after that they cannot change.
 
-**Heat and batteries:** mining keeps a phone's processor busy, so phones get warm and batteries wear faster. The app pauses at 42°C battery temperature and stops at 45°C, which lowers the risk without removing it. You mine at your own risk; the software comes with no warranty (see LICENSE).
+**Heat and batteries:** mining keeps a phone's processor busy, so phones get warm and batteries wear faster. The app pauses at 42°C battery temperature and stops at 45°C, which lowers the risk without removing it. Those are software safeguards and could fail, so don't leave a phone mining unattended or overnight. If you can, use a spare phone you don't rely on, never one with a swollen or failing battery. You mine at your own risk; the software comes with no warranty (see LICENSE).
 
 Not affiliated with Soqucoin or Soqucoin Labs. Not an investment: SQZ has no backing, no promised value and no team behind it beyond the code.
 

@@ -207,8 +207,8 @@ object Store {
     fun walletReplaced(ctx: Context): Boolean = prefs(ctx).getBoolean("walletReplaced", false)
 
     /** The user has read and accepted the heat and battery notice. */
-    fun heatNoticeAccepted(ctx: Context): Boolean = prefs(ctx).getBoolean("heatNotice", false)
-    fun acceptHeatNotice(ctx: Context) = prefs(ctx).edit().putBoolean("heatNotice", true).apply()
+    fun heatNoticeAccepted(ctx: Context): Boolean = prefs(ctx).getBoolean("heatNotice2", false)
+    fun acceptHeatNotice(ctx: Context) = prefs(ctx).edit().putBoolean("heatNotice2", true).apply()
 
     fun backedUp(ctx: Context): Boolean = prefs(ctx).getBoolean("backedUp", false)
     fun setBackedUp(ctx: Context) = prefs(ctx).edit().putBoolean("backedUp", true).apply()

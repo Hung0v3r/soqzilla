@@ -147,7 +147,8 @@ async function refresh() {
     const pct = Number((BigInt(s.minted) * 1000000n) / BigInt(s.cap)) / 10000;
     $("bar").style.width = Math.max(pct, s.minted !== "0" ? 0.3 : 0) + "%";
     $("barText").textContent = `${fmt(s.minted)} of 21,000,000,000 SQZ mined (${pct.toFixed(4)}%)`;
-    if (!s.deployed) $("phase").textContent = "Not launched yet. The launch block will be announced.";
+    if (s.miningPaused) $("phase").textContent = s.miningPaused;
+    else if (!s.deployed) $("phase").textContent = "Not launched yet. The launch block will be announced.";
     else if (!s.launched) { const mins = (s.genesis.launchHeight - s.indexedHeight); $("phase").textContent = `Launches at SOQ block ${s.genesis.launchHeight.toLocaleString("en-IE")}, in about ${mins} minute${mins === 1 ? "" : "s"}.`; }
     else $("phase").innerHTML = `Live since SOQ block ${s.genesis.launchHeight.toLocaleString("en-IE")}. Deploy transaction <span class="mono">${esc(short(s.genesis.txid))}</span>.`;
     if (s.relay) {

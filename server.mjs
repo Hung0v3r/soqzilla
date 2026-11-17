@@ -34,6 +34,10 @@ const hexOf = (w) => [...Buffer.from(w.toUpperCase())].map((b) => b.toString(16)
 const fillPage = (o) => TEMPLATE.replace(/\{\{(\w+)\}\}/g, (_m, k) => o[k] ?? "");
 const RULES_HASH = (env.RULES_HASH ?? R.bytesToHex(sha256(SPEC))).toLowerCase();
 const RELAY_DAILY_MAX = Number(env.RELAY_DAILY_MAX ?? 3000);
+// Safety switch: MINING_PAUSED=1 makes /api/work answer "not ready", and every app (all versions) stops
+// hashing within ~20 s and shows the reason. Finds already made are still relayed. Unset to resume.
+const MINING_PAUSED = env.MINING_PAUSED && env.MINING_PAUSED !== "0"
+  ? (env.MINING_PAUSED_REASON || "Mining is paused for the night. Check back in the morning.") : null;
 const GAS_AMOUNT = BigInt(env.GAS_SHORS ?? 5_000_000); // 0.05 SOQ: about three transfers
 const GAS_DAILY_MAX = Number(env.GAS_DAILY_MAX ?? 50);  // grants per day across everyone
 const FIND_FEE = 1086n * BigInt(env.SOQ_FEE_RATE ?? 1500); // shors: one relayed find is ~1,086 vB
@@ -240,7 +244,7 @@ function status() {
   return {
     net: R.NET, magic: new TextDecoder().decode(R.MAGIC), rulesHash: RULES_HASH, indexedHeight: tip.height, chainTip, finalizedHeight: finalized.height,
     deployed: !!g, genesis: g, launched: !!g && tip.height >= g.launchHeight,
-    minted: tip.minted, cap: R.CAP, mints: tip.mintCount, reward: tip.nextReward(), holders: tip.balances.size, minersOnline: minersOnline(),
+    minted: tip.minted, cap: R.CAP, mints: tip.mintCount, reward: tip.nextReward(), holders: tip.balances.size, minersOnline: minersOnline(), miningPaused: MINING_PAUSED,
     target: t.toString(16).padStart(64, "0"), expectedHashesPerMint: R.MAX_TARGET / t,
     nextRetargetHeight: tip.epochStart === null ? null : tip.epochStart + R.EPOCH_BLOCKS,
     pow: { algo: "argon2id", memMiB: R.POW.memMiB, iterations: R.POW.iterations, parallelism: R.POW.parallelism, salt: new TextDecoder().decode(R.POW.salt) },
@@ -250,6 +254,7 @@ function status() {
 }
 
 function work() {
+  if (MINING_PAUSED) return { ready: false, paused: true, reason: MINING_PAUSED };
   const g = tip.genesis;
   if (!g) return { ready: false, reason: "not deployed yet" };
   if (tip.height === null || tip.height < g.launchHeight) return { ready: false, reason: "not launched yet", launchHeight: g.launchHeight, height: tip.height };

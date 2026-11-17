@@ -37,7 +37,7 @@ const RELAY_DAILY_MAX = Number(env.RELAY_DAILY_MAX ?? 3000);
 // Safety switch: MINING_PAUSED=1 makes /api/work answer "not ready", and every app (all versions) stops
 // hashing within ~20 s and shows the reason. Finds already made are still relayed. Unset to resume.
 const MINING_PAUSED = env.MINING_PAUSED && env.MINING_PAUSED !== "0"
-  ? (env.MINING_PAUSED_REASON || "Mining is paused for the night. Check back in the morning.") : null;
+  ? (env.MINING_PAUSED_REASON || "Mining is paused.") : null;
 const GAS_AMOUNT = BigInt(env.GAS_SHORS ?? 5_000_000); // 0.05 SOQ: about three transfers
 const GAS_DAILY_MAX = Number(env.GAS_DAILY_MAX ?? 50);  // grants per day across everyone
 const FIND_FEE = 1086n * BigInt(env.SOQ_FEE_RATE ?? 1500); // shors: one relayed find is ~1,086 vB
